@@ -7,5 +7,6 @@
     <string name="weather_message">Today, March 31</string>
     <string name="temp_hi">21°</string>
     <string name="temp_lo">7°</string>
+    <string name="action_refresh">Refresh</string>
 
 </resources>
