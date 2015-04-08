@@ -34,6 +34,7 @@ import java.util.Arrays;
  */
 public class ForecastFragment extends Fragment {
     private ArrayAdapter<String> arrayAdapter;
+    private ArrayList<String> arrayList;
 
     public ForecastFragment() {
     }
@@ -51,20 +52,14 @@ public class ForecastFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
 
-        String[] data = {
-                "Mon 6/23 - Sunny - 31/17",
-                "Tue 6/24 - Foggy - 21/8",
-                "Wed 6/25 - Cloudy - 22/17",
-                "Thurs 6/26 - Rainy - 18/11",
-                "Fri 6/27 - Foggy - 21/10",
-                "Sat 6/28 - TRAPPED IN WEATHERSTATION - 23/18",
-                "Sun 6/29 - Sunny - 20/7"
-        };
+        arrayList = new ArrayList();
 
-        ArrayList<String> arrayList = new ArrayList(Arrays.asList(data));
-        arrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item_forecast, R.id.list_item_forecast_text_view, arrayList);
+        arrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.list_item_forecast, R.id.list_item_forecast_text_view, arrayList);
         ListView listView = (ListView) rootView.findViewById(R.id.listView);
         listView.setAdapter(arrayAdapter);
+
+        FetchWeatherTask weatherTask = new FetchWeatherTask();
+        weatherTask.execute("94043");
 
         return rootView;
     }
@@ -168,17 +163,24 @@ public class ForecastFragment extends Fragment {
                     try {
                         reader.close();
                     } catch (final IOException e) {
-                        Log.e("ForecastFragment", "Error closing stream", e);
+                        Log.e(LOG_TAG, "Error closing stream", e);
                     }
                 }
             }
-            String[] res = null;
             try {
-                res = getWeatherDataFromJson(forecastJsonStr, 2);
+                return getWeatherDataFromJson(forecastJsonStr, numDays);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            return res;
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String[] strings) {
+            if(strings != null) {
+                arrayAdapter.clear();
+                arrayAdapter.addAll(strings);
+            }
         }
 
         /* The date/time conversion code is going to be moved outside the asynctask later,
