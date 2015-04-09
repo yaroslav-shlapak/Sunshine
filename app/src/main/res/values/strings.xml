@@ -8,5 +8,6 @@
     <string name="temp_hi">21°</string>
     <string name="temp_lo">7°</string>
     <string name="action_refresh">Refresh</string>
+    <string name="title_activity_detail">DetailActivity</string>
 
 </resources>
