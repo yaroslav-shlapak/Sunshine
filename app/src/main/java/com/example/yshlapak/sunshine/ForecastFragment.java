@@ -90,6 +90,13 @@ public class ForecastFragment extends Fragment {
             Log.v("Fragment.onOptionsItemSelected", "action_refresh");
             return true;
         }
+
+        if (id == R.id.action_settings) {
+            Intent intent = new Intent(getActivity(), SettingsActivity.class);
+            startActivity(intent);
+
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
