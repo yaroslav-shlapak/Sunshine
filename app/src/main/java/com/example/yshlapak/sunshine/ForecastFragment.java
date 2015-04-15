@@ -1,9 +1,11 @@
 package com.example.yshlapak.sunshine;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.text.format.Time;
 import android.util.Log;
@@ -35,7 +37,6 @@ import java.util.ArrayList;
  */
 public class ForecastFragment extends Fragment {
     private ArrayAdapter<String> arrayAdapter;
-    private ArrayList<String> arrayList;
 
     public ForecastFragment() {
     }
@@ -52,10 +53,7 @@ public class ForecastFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-
-        arrayList = new ArrayList();
-
-        arrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.list_item_forecast, R.id.list_item_forecast_text_view, arrayList);
+        arrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.list_item_forecast, R.id.list_item_forecast_text_view, new ArrayList<String>());
         ListView listView = (ListView) rootView.findViewById(R.id.listView);
         listView.setAdapter(arrayAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -69,10 +67,25 @@ public class ForecastFragment extends Fragment {
             }
         });
 
-        FetchWeatherTask weatherTask = new FetchWeatherTask();
-        weatherTask.execute("94043");
-
         return rootView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateWeather();
+    }
+
+    private void updateWeather() {
+
+        FetchWeatherTask weatherTask = new FetchWeatherTask();
+        weatherTask.execute(getLocationFromSharedPreferences());
+
+    }
+
+    private String getLocationFromSharedPreferences() {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        return sharedPref.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
     }
 
     @Override
@@ -85,8 +98,7 @@ public class ForecastFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.action_refresh) {
-            FetchWeatherTask weatherTask = new FetchWeatherTask();
-            weatherTask.execute("94043");
+            updateWeather();
             Log.v("Fragment.onOptionsItemSelected", "action_refresh");
             return true;
         }
