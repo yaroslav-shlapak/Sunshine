@@ -88,6 +88,11 @@ public class ForecastFragment extends Fragment {
         return sharedPref.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
     }
 
+    private String getTempUnitsFromPreferences() {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        return sharedPref.getString(getString(R.string.pref_temp_units_key), getString(R.string.pref_temp_units_default));
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         //super.onCreateOptionsMenu(menu, inflater);
@@ -242,6 +247,16 @@ public class ForecastFragment extends Fragment {
          * Fortunately parsing is easy:  constructor takes the JSON string and converts it
          * into an Object hierarchy for us.
          */
+        private double convertToRightUnits(double metric,String tempUnits) {
+            switch (tempUnits) {
+                case "Metric":
+                    return metric;
+                case "Imperial":
+                    return 9 / 5 * metric + 32;
+                default:
+                    return metric;
+            }
+        }
         private String[] getWeatherDataFromJson(String forecastJsonStr, int numDays)
                 throws JSONException {
 
@@ -255,6 +270,10 @@ public class ForecastFragment extends Fragment {
 
             JSONObject forecastJson = new JSONObject(forecastJsonStr);
             JSONArray weatherArray = forecastJson.getJSONArray(OWM_LIST);
+
+            String tempUnits = getTempUnitsFromPreferences();
+
+
 
             // OWM returns daily forecasts based upon the local time of the city that is being
             // asked for, which means that we need to know the GMT offset to translate this data
@@ -298,8 +317,8 @@ public class ForecastFragment extends Fragment {
                 // Temperatures are in a child object called "temp".  Try not to name variables
                 // "temp" when working with temperature.  It confuses everybody.
                 JSONObject temperatureObject = dayForecast.getJSONObject(OWM_TEMPERATURE);
-                double high = temperatureObject.getDouble(OWM_MAX);
-                double low = temperatureObject.getDouble(OWM_MIN);
+                double high = convertToRightUnits(temperatureObject.getDouble(OWM_MAX), tempUnits);
+                double low = convertToRightUnits(temperatureObject.getDouble(OWM_MIN), tempUnits);
 
                 highAndLow = formatHighLows(high, low);
                 resultStrs[i] = day + " - " + description + " - " + highAndLow;

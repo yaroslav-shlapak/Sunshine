@@ -17,10 +17,4 @@
     <string name="pref_temp_units_label">Temperature Units</string>
     <string name="pref_temp_units_key" transletable="false">temp_units</string>
     <string name="pref_temp_units_default" transletable="false">metric</string>
-
-    <string-array name="pref_temp_units">
-        <item>Metric</item>
-        <item></item>
-    </string-array>
-
 </resources>
