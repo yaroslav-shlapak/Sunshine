@@ -249,9 +249,9 @@ public class ForecastFragment extends Fragment {
          */
         private double convertToRightUnits(double metric,String tempUnits) {
             switch (tempUnits) {
-                case "Metric":
+                case "metric":
                     return metric;
-                case "Imperial":
+                case "imperial":
                     return 9 / 5 * metric + 32;
                 default:
                     return metric;

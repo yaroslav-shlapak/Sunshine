@@ -11,7 +11,7 @@
 
     <ListPreference
         android:title="@string/pref_temp_units_label"
-        android:key="@string/pref_location_key"
+        android:key="@string/pref_temp_units_key"
         android:defaultValue="@string/pref_temp_units_default"
         android:entries="@array/pref_temp_units_entries"
         android:entryValues="@array/pref_temp_units_values"
