@@ -1,4 +1,4 @@
-package com.example.yshlapak.sunshine.data;
+package com.example.android.sunshine.app.data;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,7 +9,8 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.test.AndroidTestCase;
-import com.example.yshlapak.sunshine.utils.PollingCheck;
+
+import com.example.android.sunshine.app.utils.PollingCheck;
 
 import java.util.Map;
 import java.util.Set;
@@ -21,7 +22,7 @@ import java.util.Set;
  */
 public class TestUtilities extends AndroidTestCase {
     static final String TEST_LOCATION = "99705";
-    static final public long TEST_DATE = 1419033600L;  // December 20th, 2014
+    static final long TEST_DATE = 1419033600L;  // December 20th, 2014
 
     static void validateCursor(String error, Cursor valueCursor, ContentValues expectedValues) {
         assertTrue("Empty cursor returned. " + error, valueCursor.moveToFirst());
@@ -29,7 +30,7 @@ public class TestUtilities extends AndroidTestCase {
         valueCursor.close();
     }
 
-    public static void validateCurrentRecord(String error, Cursor valueCursor, ContentValues expectedValues) {
+    static void validateCurrentRecord(String error, Cursor valueCursor, ContentValues expectedValues) {
         Set<Map.Entry<String, Object>> valueSet = expectedValues.valueSet();
         for (Map.Entry<String, Object> entry : valueSet) {
             String columnName = entry.getKey();
@@ -45,7 +46,7 @@ public class TestUtilities extends AndroidTestCase {
     /*
         Students: Use this to create some default weather values for your database tests.
      */
-    public static ContentValues createWeatherValues(long locationRowId) {
+    static ContentValues createWeatherValues(long locationRowId) {
         ContentValues weatherValues = new ContentValues();
         weatherValues.put(WeatherContract.WeatherEntry.COLUMN_LOC_KEY, locationRowId);
         weatherValues.put(WeatherContract.WeatherEntry.COLUMN_DATE, TEST_DATE);
@@ -65,7 +66,7 @@ public class TestUtilities extends AndroidTestCase {
         Students: You can uncomment this helper function once you have finished creating the
         LocationEntry part of the WeatherContract.
      */
-    public static ContentValues createNorthPoleLocationValues() {
+    static ContentValues createNorthPoleLocationValues() {
         // Create a new map of values, where column names are the keys
         ContentValues testValues = new ContentValues();
         testValues.put(WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING, TEST_LOCATION);

@@ -1,4 +1,19 @@
-package com.example.yshlapak.sunshine.data;
+/*
+ * Copyright (C) 2014 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.example.android.sunshine.app.data;
 
 import android.content.ComponentName;
 import android.content.ContentUris;
@@ -12,9 +27,16 @@ import android.os.Build;
 import android.test.AndroidTestCase;
 import android.util.Log;
 
-import com.example.yshlapak.sunshine.data.WeatherContract.LocationEntry;
-import com.example.yshlapak.sunshine.data.WeatherContract.WeatherEntry;
+import com.example.android.sunshine.app.data.WeatherContract.LocationEntry;
+import com.example.android.sunshine.app.data.WeatherContract.WeatherEntry;
 
+/*
+    Note: This is not a complete set of tests of the Sunshine ContentProvider, but it does test
+    that at least the basic functionality has been implemented correctly.
+
+    Students: Uncomment the tests in this class as you implement the functionality in your
+    ContentProvider to make sure that you've implemented things reasonably correctly.
+ */
 public class TestProvider extends AndroidTestCase {
 
     public static final String LOG_TAG = TestProvider.class.getSimpleName();
@@ -62,25 +84,11 @@ public class TestProvider extends AndroidTestCase {
     }
 
     /*
-       This helper function deletes all records from both database tables using the database
-       functions only.  This is designed to be used to reset the state of the database until the
-       delete functionality is available in the ContentProvider.
-     */
-    public void deleteAllRecordsFromDB() {
-        WeatherDbHelper dbHelper = new WeatherDbHelper(mContext);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        db.delete(WeatherEntry.TABLE_NAME, null, null);
-        db.delete(LocationEntry.TABLE_NAME, null, null);
-        db.close();
-    }
-
-    /*
         Student: Refactor this function to use the deleteAllRecordsFromProvider functionality once
         you have implemented delete functionality there.
      */
     public void deleteAllRecords() {
-        deleteAllRecordsFromDB();
+        deleteAllRecordsFromProvider();
     }
 
     // Since we want each test to start with a clean slate, run deleteAllRecords
@@ -109,7 +117,7 @@ public class TestProvider extends AndroidTestCase {
 
             // Make sure that the registered authority matches the authority from the Contract.
             assertEquals("Error: WeatherProvider registered with authority: " + providerInfo.authority +
-                            " instead of authority: " + WeatherContract.CONTENT_AUTHORITY,
+                    " instead of authority: " + WeatherContract.CONTENT_AUTHORITY,
                     providerInfo.authority, WeatherContract.CONTENT_AUTHORITY);
         } catch (PackageManager.NameNotFoundException e) {
             // I guess the provider isn't registered correctly.
@@ -129,7 +137,7 @@ public class TestProvider extends AndroidTestCase {
         String type = mContext.getContentResolver().getType(WeatherEntry.CONTENT_URI);
         // vnd.android.cursor.dir/com.example.android.sunshine.app/weather
         assertEquals("Error: the WeatherEntry CONTENT_URI should return WeatherEntry.CONTENT_TYPE",
-                WeatherContract.WeatherEntry.CONTENT_TYPE, type);
+                WeatherEntry.CONTENT_TYPE, type);
 
         String testLocation = "94074";
         // content://com.example.android.sunshine.app/weather/94074
@@ -189,11 +197,11 @@ public class TestProvider extends AndroidTestCase {
         TestUtilities.validateCursor("testBasicWeatherQuery", weatherCursor, weatherValues);
     }
 
-
-/*        This test uses the database directly to insert and then uses the ContentProvider to
+    /*
+        This test uses the database directly to insert and then uses the ContentProvider to
         read out the data.  Uncomment this test to see if your location queries are
-        performing correctly.*/
-
+        performing correctly.
+     */
     public void testBasicLocationQueries() {
         // insert our test records into the database
         WeatherDbHelper dbHelper = new WeatherDbHelper(mContext);

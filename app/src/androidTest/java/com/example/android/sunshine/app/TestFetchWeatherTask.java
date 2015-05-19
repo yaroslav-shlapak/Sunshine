@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.yshlapak.sunshine;
+package com.example.android.sunshine.app;
 
 import android.annotation.TargetApi;
 import android.database.Cursor;
 import android.test.AndroidTestCase;
 
-import com.example.yshlapak.sunshine.data.WeatherContract;
+import com.example.android.sunshine.app.data.WeatherContract;
 
 public class TestFetchWeatherTask extends AndroidTestCase{
     static final String ADD_LOCATION_SETTING = "Sunnydale, CA";

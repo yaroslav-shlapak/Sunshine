@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.yshlapak.sunshine;
+package com.example.android.sunshine.app;
 
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -23,10 +23,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.text.format.Time;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 
-import com.example.yshlapak.sunshine.data.WeatherContract;
-import com.example.yshlapak.sunshine.data.WeatherContract.WeatherEntry;
+import com.example.android.sunshine.app.data.WeatherContract;
+import com.example.android.sunshine.app.data.WeatherContract.WeatherEntry;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,12 +39,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Vector;
 
-
 public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
 
     private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
 
-    private ArrayAdapter<String> mForecastAdapter;
     private final Context mContext;
 
     public FetchWeatherTask(Context context) {
@@ -103,7 +100,6 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
         // Wait, that worked?  Yes!
         return locationId;
     }
-
 
     /**
      * Take the String representing the complete forecast in JSON Format and
@@ -236,10 +232,8 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
             }
 
             int inserted = 0;
-
             // add to database
             if ( cVVector.size() > 0 ) {
-                // Student: call bulkInsert to add the weatherEntries to the database here
                 ContentValues[] cvArray = new ContentValues[cVVector.size()];
                 cVVector.toArray(cvArray);
                 inserted = mContext.getContentResolver().bulkInsert(WeatherEntry.CONTENT_URI, cvArray);
@@ -255,6 +249,7 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
 
     @Override
     protected Void doInBackground(String... params) {
+
         // If there's no zip code, there's nothing to look up.  Verify size of params.
         if (params.length == 0) {
             return null;
@@ -323,9 +318,8 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
             getWeatherDataFromJson(forecastJsonStr, locationQuery);
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error ", e);
-            // If the code didn't successfully get the weather data, there's no point in attemping
+            // If the code didn't successfully get the weather data, there's no point in attempting
             // to parse it.
-            return null;
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage(), e);
             e.printStackTrace();
@@ -341,9 +335,6 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
                 }
             }
         }
-
-        // This will only happen if there was an error getting or parsing the forecast.
         return null;
     }
-
 }

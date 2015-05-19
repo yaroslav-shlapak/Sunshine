@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.yshlapak.sunshine.data;
+package com.example.android.sunshine.app.data;
 
 import android.annotation.TargetApi;
 import android.content.ContentProvider;
@@ -39,7 +39,7 @@ public class WeatherProvider extends ContentProvider {
 
     static{
         sWeatherByLocationSettingQueryBuilder = new SQLiteQueryBuilder();
-
+        
         //This is an inner join which looks like
         //weather INNER JOIN location ON weather.location_id = location._id
         sWeatherByLocationSettingQueryBuilder.setTables(
@@ -146,6 +146,7 @@ public class WeatherProvider extends ContentProvider {
     /*
         Students: Here's where you'll code the getType function that uses the UriMatcher.  You can
         test this by uncommenting testGetType in TestProvider.
+
      */
     @Override
     public String getType(Uri uri) {
@@ -219,6 +220,7 @@ public class WeatherProvider extends ContentProvider {
         retCursor.setNotificationUri(getContext().getContentResolver(), uri);
         return retCursor;
     }
+
     /*
         Student: Add the ability to insert Locations to the implementation of this function.
      */
@@ -312,6 +314,7 @@ public class WeatherProvider extends ContentProvider {
         }
         return rowsUpdated;
     }
+
     @Override
     public int bulkInsert(Uri uri, ContentValues[] values) {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();

@@ -1,4 +1,4 @@
-package com.example.yshlapak.sunshine;
+package com.example.android.sunshine.app;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -9,10 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 /**
  * {@link ForecastAdapter} exposes a list of weather forecasts
- * from a {@link android.database.Cursor} to a {@link android.widget.ListView}.
+ * from a {@link Cursor} to a {@link android.widget.ListView}.
  */
 public class ForecastAdapter extends CursorAdapter {
 
