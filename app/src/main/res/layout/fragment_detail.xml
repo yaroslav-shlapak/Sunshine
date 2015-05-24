@@ -1,77 +1,91 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.yshlapak.sunshine.DetailActivity$PlaceholderFragment">
+<!-- Master layout. -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="50dp"
-        android:text="100°"
-        android:id="@+id/maxTemp"
-        android:layout_marginTop="62dp"
-        android:layout_marginLeft="48dp"
-        android:layout_marginStart="48dp"
-        android:layout_below="@+id/date"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="30dp"
-        android:text="100°"
-        android:id="@+id/minTemp"
-        android:layout_below="@+id/maxTemp"
-        android:layout_alignLeft="@+id/maxTemp"
-        android:layout_alignStart="@+id/maxTemp" />
+        <!-- Header: Day, Date -->
+        <TextView
+            android:id="@+id/detail_day_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tomorrow" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:text="Clear"
-        android:id="@+id/weatherDescription"
-        android:layout_alignBottom="@+id/minTemp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="51dp"
-        android:layout_marginEnd="51dp" />
+        <TextView
+            android:id="@+id/detail_date_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="June 24"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="30dp"
-        android:text="Day"
-        android:id="@+id/day"
-        android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/maxTemp"
-        android:layout_alignStart="@+id/maxTemp" />
+        <!-- Main content: high, low, art, weather state -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:text="Date"
-        android:id="@+id/date"
-        android:layout_below="@+id/day"
-        android:layout_alignLeft="@+id/day"
-        android:layout_alignStart="@+id/day" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="ALL"
-        android:textSize="30dp"
-        android:id="@+id/allData"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/maxTemp"
-        android:layout_toEndOf="@+id/maxTemp"
-        android:layout_marginBottom="136dp" />
+                <TextView
+                    android:id="@+id/detail_high_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="21°"/>
 
+                <TextView
+                    android:id="@+id/detail_low_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="11°" />
+            </LinearLayout>
 
-</RelativeLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/detail_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_launcher" />
+
+                <TextView
+                    android:id="@+id/detail_forecast_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Clear" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Humidity, wind, pressure -->
+        <TextView
+            android:id="@+id/detail_humidity_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="48%" />
+
+        <TextView
+            android:id="@+id/detail_wind_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="6 km/h NW" />
+
+        <TextView
+            android:id="@+id/detail_pressure_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1014" />
+    </LinearLayout>
+</ScrollView>
