@@ -198,6 +198,9 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             String lowString = Utility.formatTemperature(getActivity(), low, isMetric);
             mLowTempView.setText(lowString);
 
+            // For accessibility, add a content description to the icon field
+            mIconView.setContentDescription(description);
+
             // Read humidity from cursor and update view
             float humidity = data.getFloat(COL_WEATHER_HUMIDITY);
             mHumidityView.setText(getActivity().getString(R.string.format_humidity, humidity));
